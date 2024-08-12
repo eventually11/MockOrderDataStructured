@@ -11,10 +11,6 @@ Generate random order data with various attributes like order_id, tenant, flow, 
 
 pip install pandas faker hypothesis openstreetmap-api sqlalchemy
 
-Clone the Repository
-
-git clone https://github.com/yourusername/saas-partner-order-generator.git
-cd saas-partner-order-generator
 
 ## Usage
 
