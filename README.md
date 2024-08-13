@@ -13,7 +13,7 @@ Generate random order data with various attributes like order_id, tenant, flow, 
 
 ## Output
 
-When defining the table structure, the following fields and their formats are included:
+When defining the table structure, the output example should be like this:
 
     order_id: INT - Unique identifier for each order.
     tenant: INT - Identifier for the tenant.
