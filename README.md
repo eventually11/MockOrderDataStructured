@@ -1,15 +1,47 @@
-# Partner Order Generator
-This project is a Python-based tool designed to generate synthetic data for SaaS partner orders. The data can be used for testing, analysis, and validation purposes. It leverages libraries such as hypothesis for generating realistic test data, Faker for creating random data, and integrates with OpenStreetMap API to provide realistic addresses.
+# Partner Order Table Structure
+This project is a Python-based tool designed to define the structure of tables for partner orders.
+The defined structures can be used to ensure consistency in data storage, database schema design, 
+and to serve as a foundation for generating synthetic data for testing, analysis, and validation purposes.
+
 
 ## Introduction
-The Order Generator is a tool that automates the creation of order data. This can be especially useful for developers, data analysts, and QA teams to simulate real-world data for testing and development purposes.
+The Order Table Structure tool is intended for developers, data architects, and database administrators to define and maintain consistent table schemas for partner orders. This is crucial for ensuring that the data model is well-structured, normalized, and ready for integration with other systems
+
 
 ## Features
 Generate random order data with various attributes like order_id, tenant, flow, sender, service_fee, etc.
 
+## Output
+
+When defining the table structure, the following fields and their formats are included:
+
+    order_id: INT - Unique identifier for each order.
+    tenant: INT - Identifier for the tenant.
+    flow: INT - Flow identifier related to the order process.
+    sender: VARCHAR(255) - Name or ID of the sender.
+    hub: VARCHAR(255) - Identifier for the hub processing the order.
+    dispatch_pool: INT - Identifier for the dispatch pool.
+    vehicle_type: VARCHAR(50) - Type of vehicle used for the order.
+    start_time: DATETIME - Timestamp when the order process starts.
+    end_time: DATETIME - Timestamp when the order process ends.
+    title: VARCHAR(255) - Title or description of the order.
+    route_description: TEXT - Detailed description of the route taken.
+    tags: VARCHAR(255) - Tags associated with the order for categorization.
+    overview: TEXT - Overview or summary of the order.
+    content: TEXT - Detailed content or notes about the order.
+    type: VARCHAR(50) - Type of the order (e.g., delivery, pickup).
+    start: VARCHAR(255) - Start address or location.
+    end: VARCHAR(255) - End address or location.
+    service_fee: DECIMAL(10, 2) - Fee associated with the order.
+    start_task_validation: VARCHAR(255) - Validation information for the start task.
+    end_task_validation: VARCHAR(255) - Validation information for the end task.
+    status_group: INT - Status group identifier for order tracking.
+
 ## Installation
 
-pip install pandas faker hypothesis openstreetmap-api sqlalchemy
+    git clone https://github.com/yourusername/MockOrderDataGenerator.git
+
+    pip install pandas faker hypothesis sqlalchemy
 
 
 ## Usage
