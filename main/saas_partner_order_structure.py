@@ -17,7 +17,7 @@ parent_directory = os.path.abspath(os.path.join(os.path.dirname(current_file_pat
 parent_directory2 = os.path.abspath(os.path.join(os.path.dirname(current_file_path), '../../MockOrderDataGenerator/main'))
 sys.path.insert(0, parent_directory)
 sys.path.insert(0, parent_directory2)
-from route_info_saver import RouteInfoToMySQL  
+from route_info_saver import RouteInfoToMySQL
 import json
 
 
@@ -30,6 +30,10 @@ class SaasPartnerOrderDataStructure:
         self.fake = Faker()
         self.order_id_list = list(range(1000000, 10000000))
         random.shuffle(self.order_id_list)  # Shuffle to randomize order
+        # Load the address pool from the CSV file
+        csv_file_path = os.path.join(parent_directory, 'route_info_output.csv')
+        df = pd.read_csv(csv_file_path)
+        self.address_pool = df['address'].dropna().unique().tolist()
 
     @composite
     def generate_order_data(draw, self, address_pool):
