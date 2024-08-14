@@ -39,9 +39,9 @@ When defining the table structure, the output example should be like this:
     
 The primary output of each structure descriptor includes two key files:
 
-Text File: A text file (txt) that documents the structure of the SaaS partner orders. It includes detailed information about each field, such as its name, type, description, and any rules or constraints applied.
+Text File: A text file (.txt) that documents the structure of the  partner orders. It includes detailed information about each field, such as its name, type, description, and any rules or constraints applied.
 
-JSON File: A JSON file (json) that provides the same documentation in a structured, machine-readable format. This format is useful for integration with other systems or for further automated processing.
+JSON File: A JSON file (.json) that provides the same documentation in a structured, machine-readable format. This format is useful for integration with other systems or for further automated processing.
 
 ## Installation
 
