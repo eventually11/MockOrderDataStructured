@@ -1,0 +1,140 @@
+[
+    {
+        "name": "task_id",
+        "type": "INT",
+        "description": "Unique identifier for each task.",
+        "rules": "Randomly generated integer between 10,000,000 and 100,000,000."
+    },
+    {
+        "name": "tenant",
+        "type": "INT",
+        "description": "Identifier for the tenant who owns the task.",
+        "rules": "Randomly generated integer between 1 and 1,000."
+    },
+    {
+        "name": "order_id",
+        "type": "INT",
+        "description": "Identifier for the order associated with the task.",
+        "rules": "Randomly selected from the available order IDs."
+    },
+    {
+        "name": "sender",
+        "type": "VARCHAR(255)",
+        "description": "Name or ID of the sender.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "hub",
+        "type": "VARCHAR(255)",
+        "description": "Identifier for the hub processing the task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "zone",
+        "type": "INT",
+        "description": "Zone identifier for the task.",
+        "rules": "Randomly generated integer between 1 and 100."
+    },
+    {
+        "name": "flow",
+        "type": "VARCHAR(255)",
+        "description": "Flow identifier related to the task process.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "task_pool",
+        "type": "INT",
+        "description": "Identifier for the task pool handling the task.",
+        "rules": "Randomly generated integer between 1 and 1,000."
+    },
+    {
+        "name": "partner",
+        "type": "INT",
+        "description": "Partner identifier associated with the task.",
+        "rules": "Randomly generated integer between 1 and 1,000."
+    },
+    {
+        "name": "title",
+        "type": "VARCHAR(255)",
+        "description": "Title or description of the task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "content",
+        "type": "TEXT",
+        "description": "Detailed content or notes about the task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "date",
+        "type": "DATETIME",
+        "description": "Timestamp when the task is scheduled.",
+        "rules": "Randomly generated datetime between January 1, 2020, and December 31, 2024."
+    },
+    {
+        "name": "time_slot",
+        "type": "VARCHAR(50)",
+        "description": "Time slot allocated for the task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "type",
+        "type": "VARCHAR(50)",
+        "description": "Type of the task (e.g., delivery, pickup).",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "service_time",
+        "type": "VARCHAR(50)",
+        "description": "Time required to complete the task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "start",
+        "type": "VARCHAR(255)",
+        "description": "Start address or location for the task.",
+        "rules": "Randomly selected address from the address_pool."
+    },
+    {
+        "name": "end",
+        "type": "VARCHAR(255)",
+        "description": "End address or location for the task.",
+        "rules": "Randomly selected address from the address_pool (different from start)."
+    },
+    {
+        "name": "service_fee",
+        "type": "DECIMAL(10, 2)",
+        "description": "Fee associated with the task.",
+        "rules": "Randomly generated decimal value between 0.01 and 10,000.00."
+    },
+    {
+        "name": "items",
+        "type": "TEXT",
+        "description": "Items involved in the task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "start_task_validation",
+        "type": "VARCHAR(255)",
+        "description": "Validation information for the start task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "end_task_validation",
+        "type": "VARCHAR(255)",
+        "description": "Validation information for the end task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "status_code",
+        "type": "INT",
+        "description": "Status code for tracking the task's progress.",
+        "rules": "Randomly generated integer between 1 and 10."
+    },
+    {
+        "name": "status_group",
+        "type": "INT",
+        "description": "Status group identifier for the task.",
+        "rules": "Randomly generated integer between 1 and 10."
+    }
+]

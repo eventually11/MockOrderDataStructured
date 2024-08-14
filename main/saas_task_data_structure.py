@@ -23,39 +23,22 @@ parent_directory = os.path.abspath(os.path.join(os.path.dirname(current_file_pat
 parent_directory2 = os.path.abspath(os.path.join(os.path.dirname(current_file_path), '../../MockOrderDataGenerator/main'))
 sys.path.insert(0, parent_directory)
 sys.path.insert(0, parent_directory2)
-from route_info_saver import RouteInfoToMySQL
 import json
 
 
-class SaasPartnerOrderDataStructure:
-    """
-    A class that defines the data structure for SaaS partner orders.
-    """
-
+class SaasTaskDataStructure:
+    
     def __init__(self):
         self.fake = Faker()
+        self.task_id_list = list(range(10000000, 100000000))
         self.order_id_list = list(range(1000000, 10000000))
         random.shuffle(self.order_id_list)  # Shuffle to randomize order
-        # Load the address pool from the CSV file
         csv_file_path = os.path.join(parent_directory, 'route_info_output.csv')
         df = pd.read_csv(csv_file_path)
         self.address_pool = df['address'].dropna().unique().tolist()
 
     @composite
-    def generate_order_data(draw, self, address_pool):
-        """
-        Strategy to generate SaaS partner order data.
-
-        Parameters
-        ----------
-        address_pool : list
-            A list of addresses to choose from.
-
-        Returns
-        -------
-        dict
-            A dictionary containing the generated order data.
-        """
+    def saas_task_data(draw, self):
         service_fee = round(draw(floats(min_value=0.01, max_value=10000.0)), 2)
         
         min_datetime = datetime(2020, 1, 1)
@@ -66,55 +49,61 @@ class SaasPartnerOrderDataStructure:
         max_duration = timedelta(hours=1)
         end_time = start_time + draw(timedeltas(min_value=min_duration, max_value=max_duration))
 
-        start_address = random.choice(address_pool)
-        end_address = random.choice(address_pool)
+        start_address = random.choice(self.address_pool)
+        end_address = random.choice(self.address_pool)
         while end_address == start_address:
-            end_address = random.choice(address_pool)
+            end_address = random.choice(self.address_pool)
 
         return {
-            'order_id': self.order_id_list.pop(),
+            'task_id': self.task_id_list.pop(),
             'tenant': draw(integers(min_value=1, max_value=1000)),
-            'flow': draw(integers(min_value=1, max_value=100)),
+            'order_id': random.choice(self.order_id_list),
             'sender': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
             'hub': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
-            'dispatch_pool': draw(integers(min_value=1, max_value=100)),
-            'vehicle_type': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
-            'start_time': start_time,
-            'end_time': end_time,
+            'zone': draw(integers(min_value=1, max_value=100)),
+            'flow': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
+            'task_pool': draw(integers(min_value=1, max_value=1000)),
+            'partner': draw(integers(min_value=1, max_value=1000)),
             'title': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
-            'route_description': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
-            'tags': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
-            'overview': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
             'content': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
+            'date': start_time,
+            'time_slot': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
             'type': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
+            'service_time': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
             'start': start_address,
             'end': end_address,
             'service_fee': service_fee,
+            'items': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
             'start_task_validation': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
             'end_task_validation': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
+            'status_code': draw(integers(min_value=1, max_value=10)),
             'status_group': draw(integers(min_value=1, max_value=10))
         }
-
-
+    
     def generate_documentation(self):
+        """
+        Generates a documentation file with details about the data fields used in the SaasTaskDataStructure.
+        The documentation is saved both as a text file and a JSON file.
+        """
+
         fields = [
             {
-                "name": "order_id",
+                "name": "task_id",
                 "type": "INT",
-                "description": "Unique identifier for each order.",
-                "rules": "Randomly generated integer between 1,000,000 and 10,000,000."
+                "description": "Unique identifier for each task.",
+                "rules": "Randomly generated integer between 10,000,000 and 100,000,000."
             },
             {
                 "name": "tenant",
                 "type": "INT",
-                "description": "Identifier for the tenant who owns the order.",
+                "description": "Identifier for the tenant who owns the task.",
                 "rules": "Randomly generated integer between 1 and 1,000."
             },
             {
-                "name": "flow",
+                "name": "order_id",
                 "type": "INT",
-                "description": "Flow identifier related to the order process.",
-                "rules": "Randomly generated integer between 1 and 100."
+                "description": "Identifier for the order associated with the task.",
+                "rules": "Randomly selected from the available order IDs."
             },
             {
                 "name": "sender",
@@ -125,86 +114,92 @@ class SaasPartnerOrderDataStructure:
             {
                 "name": "hub",
                 "type": "VARCHAR(255)",
-                "description": "Identifier for the hub processing the order.",
+                "description": "Identifier for the hub processing the task.",
                 "rules": "Random string consisting of alphanumeric characters."
             },
             {
-                "name": "dispatch_pool",
+                "name": "zone",
                 "type": "INT",
-                "description": "Identifier for the dispatch pool handling the order.",
+                "description": "Zone identifier for the task.",
                 "rules": "Randomly generated integer between 1 and 100."
             },
             {
-                "name": "vehicle_type",
-                "type": "VARCHAR(50)",
-                "description": "Type of vehicle used for the order (e.g., car, bike, van).",
+                "name": "flow",
+                "type": "VARCHAR(255)",
+                "description": "Flow identifier related to the task process.",
                 "rules": "Random string consisting of alphanumeric characters."
             },
             {
-                "name": "start_time",
-                "type": "DATETIME",
-                "description": "Timestamp when the order process starts.",
-                "rules": "Randomly generated datetime between January 1, 2020, and December 31, 2024."
+                "name": "task_pool",
+                "type": "INT",
+                "description": "Identifier for the task pool handling the task.",
+                "rules": "Randomly generated integer between 1 and 1,000."
             },
             {
-                "name": "end_time",
-                "type": "DATETIME",
-                "description": "Timestamp when the order process ends.",
-                "rules": "Calculated as start_time plus a random duration between 2 minutes and 1 hour."
+                "name": "partner",
+                "type": "INT",
+                "description": "Partner identifier associated with the task.",
+                "rules": "Randomly generated integer between 1 and 1,000."
             },
             {
                 "name": "title",
                 "type": "VARCHAR(255)",
-                "description": "Title or description of the order.",
-                "rules": "Random string consisting of alphanumeric characters."
-            },
-            {
-                "name": "route_description",
-                "type": "TEXT",
-                "description": "Detailed description of the route taken for the order.",
-                "rules": "Random string consisting of alphanumeric characters."
-            },
-            {
-                "name": "tags",
-                "type": "VARCHAR(255)",
-                "description": "Tags associated with the order for categorization.",
-                "rules": "Random string consisting of alphanumeric characters."
-            },
-            {
-                "name": "overview",
-                "type": "TEXT",
-                "description": "Overview or summary of the order.",
+                "description": "Title or description of the task.",
                 "rules": "Random string consisting of alphanumeric characters."
             },
             {
                 "name": "content",
                 "type": "TEXT",
-                "description": "Detailed content or notes about the order.",
+                "description": "Detailed content or notes about the task.",
+                "rules": "Random string consisting of alphanumeric characters."
+            },
+            {
+                "name": "date",
+                "type": "DATETIME",
+                "description": "Timestamp when the task is scheduled.",
+                "rules": "Randomly generated datetime between January 1, 2020, and December 31, 2024."
+            },
+            {
+                "name": "time_slot",
+                "type": "VARCHAR(50)",
+                "description": "Time slot allocated for the task.",
                 "rules": "Random string consisting of alphanumeric characters."
             },
             {
                 "name": "type",
                 "type": "VARCHAR(50)",
-                "description": "Type of the order (e.g., delivery, pickup).",
+                "description": "Type of the task (e.g., delivery, pickup).",
+                "rules": "Random string consisting of alphanumeric characters."
+            },
+            {
+                "name": "service_time",
+                "type": "VARCHAR(50)",
+                "description": "Time required to complete the task.",
                 "rules": "Random string consisting of alphanumeric characters."
             },
             {
                 "name": "start",
                 "type": "VARCHAR(255)",
-                "description": "Start address or location for the order.",
+                "description": "Start address or location for the task.",
                 "rules": "Randomly selected address from the address_pool."
             },
             {
                 "name": "end",
                 "type": "VARCHAR(255)",
-                "description": "End address or location for the order.",
+                "description": "End address or location for the task.",
                 "rules": "Randomly selected address from the address_pool (different from start)."
             },
             {
                 "name": "service_fee",
                 "type": "DECIMAL(10, 2)",
-                "description": "Fee associated with the order.",
+                "description": "Fee associated with the task.",
                 "rules": "Randomly generated decimal value between 0.01 and 10,000.00."
+            },
+            {
+                "name": "items",
+                "type": "TEXT",
+                "description": "Items involved in the task.",
+                "rules": "Random string consisting of alphanumeric characters."
             },
             {
                 "name": "start_task_validation",
@@ -219,26 +214,34 @@ class SaasPartnerOrderDataStructure:
                 "rules": "Random string consisting of alphanumeric characters."
             },
             {
+                "name": "status_code",
+                "type": "INT",
+                "description": "Status code for tracking the task's progress.",
+                "rules": "Randomly generated integer between 1 and 10."
+            },
+            {
                 "name": "status_group",
                 "type": "INT",
-                "description": "Status group identifier for tracking the order's status.",
+                "description": "Status group identifier for the task.",
                 "rules": "Randomly generated integer between 1 and 10."
             }
         ]
 
         # Writing the documentation to a text file
-        with open("SaasPartnerOrderDataStructure_Documentation.txt", "w") as file:
+        with open("SaasTaskDataStructure_Documentation.txt", "w") as file:
             for field in fields:
                 file.write(f"Field Name: {field['name']}\n")
                 file.write(f"Type: {field['type']}\n")
                 file.write(f"Description: {field['description']}\n")
                 file.write(f"Rules: {field['rules']}\n")
                 file.write("\n")
+        
         # Writing the documentation to a JSON file
-        with open("SaasPartnerOrderDataStructure_Documentation.json", "w") as json_file:
+        with open("SaasTaskDataStructure_Documentation.json", "w") as json_file:
             json.dump(fields, json_file, indent=4)
+
 # Usage example
 if __name__ == "__main__":
-    structure = SaasPartnerOrderDataStructure()
+    structure = SaasTaskDataStructure()
     structure.generate_documentation()
-    print("Documentation generated and saved to 'SaasPartnerOrderDataStructure_Documentation.txt'")
+    print("Documentation generated and saved to 'SaasTaskDataStructure_Documentation.txt' ")

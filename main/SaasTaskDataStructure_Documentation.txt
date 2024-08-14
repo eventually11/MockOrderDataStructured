@@ -1,0 +1,115 @@
+Field Name: task_id
+Type: INT
+Description: Unique identifier for each task.
+Rules: Randomly generated integer between 10,000,000 and 100,000,000.
+
+Field Name: tenant
+Type: INT
+Description: Identifier for the tenant who owns the task.
+Rules: Randomly generated integer between 1 and 1,000.
+
+Field Name: order_id
+Type: INT
+Description: Identifier for the order associated with the task.
+Rules: Randomly selected from the available order IDs.
+
+Field Name: sender
+Type: VARCHAR(255)
+Description: Name or ID of the sender.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: hub
+Type: VARCHAR(255)
+Description: Identifier for the hub processing the task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: zone
+Type: INT
+Description: Zone identifier for the task.
+Rules: Randomly generated integer between 1 and 100.
+
+Field Name: flow
+Type: VARCHAR(255)
+Description: Flow identifier related to the task process.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: task_pool
+Type: INT
+Description: Identifier for the task pool handling the task.
+Rules: Randomly generated integer between 1 and 1,000.
+
+Field Name: partner
+Type: INT
+Description: Partner identifier associated with the task.
+Rules: Randomly generated integer between 1 and 1,000.
+
+Field Name: title
+Type: VARCHAR(255)
+Description: Title or description of the task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: content
+Type: TEXT
+Description: Detailed content or notes about the task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: date
+Type: DATETIME
+Description: Timestamp when the task is scheduled.
+Rules: Randomly generated datetime between January 1, 2020, and December 31, 2024.
+
+Field Name: time_slot
+Type: VARCHAR(50)
+Description: Time slot allocated for the task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: type
+Type: VARCHAR(50)
+Description: Type of the task (e.g., delivery, pickup).
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: service_time
+Type: VARCHAR(50)
+Description: Time required to complete the task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: start
+Type: VARCHAR(255)
+Description: Start address or location for the task.
+Rules: Randomly selected address from the address_pool.
+
+Field Name: end
+Type: VARCHAR(255)
+Description: End address or location for the task.
+Rules: Randomly selected address from the address_pool (different from start).
+
+Field Name: service_fee
+Type: DECIMAL(10, 2)
+Description: Fee associated with the task.
+Rules: Randomly generated decimal value between 0.01 and 10,000.00.
+
+Field Name: items
+Type: TEXT
+Description: Items involved in the task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: start_task_validation
+Type: VARCHAR(255)
+Description: Validation information for the start task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: end_task_validation
+Type: VARCHAR(255)
+Description: Validation information for the end task.
+Rules: Random string consisting of alphanumeric characters.
+
+Field Name: status_code
+Type: INT
+Description: Status code for tracking the task's progress.
+Rules: Randomly generated integer between 1 and 10.
+
+Field Name: status_group
+Type: INT
+Description: Status group identifier for the task.
+Rules: Randomly generated integer between 1 and 10.
+
