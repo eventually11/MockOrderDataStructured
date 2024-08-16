@@ -42,7 +42,7 @@ class SaasWorkOrderStructure:
         self.address_pool = list(self.address_distance_map.keys())  # List of addresses
 
     @composite
-    def saas_work_order(draw, self):
+    def saas_work_order(draw, self, address_pool):
         service_fee = round(draw(floats(min_value=0.01, max_value=10000.0)), 2)
         
         min_datetime = datetime(2020, 1, 1)
