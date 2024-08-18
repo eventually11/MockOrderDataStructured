@@ -1,1 +1,11 @@
 output_directory: "../output"
+parameters:
+  service_fee:
+    min: 0.01
+    max: 10000.0
+  datetime_range:
+    min: "2020-01-01"
+    max: "2024-12-31"
+  duration_range:
+    min_minutes: 2
+    max_hours: 1
