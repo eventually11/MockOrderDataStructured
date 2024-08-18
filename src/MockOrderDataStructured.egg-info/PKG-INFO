@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: MockOrderDataStructured
+Version: 1.1.0
+Summary: A package for structuring and test data.
+Home-page: https://github.com/eventually11/MockOrderDataStructured
+Author: eventually
+Author-email: ferry792351742@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+License-File: License.txt

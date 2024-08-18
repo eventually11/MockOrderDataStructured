@@ -1,0 +1,128 @@
+[
+    {
+        "name": "order_id",
+        "type": "INT",
+        "description": "Unique identifier for each order.",
+        "rules": "Randomly generated integer between 1,000,000 and 10,000,000."
+    },
+    {
+        "name": "tenant",
+        "type": "INT",
+        "description": "Identifier for the tenant who owns the order.",
+        "rules": "Randomly generated integer between 1 and 1,000."
+    },
+    {
+        "name": "flow",
+        "type": "INT",
+        "description": "Flow identifier related to the order process.",
+        "rules": "Randomly generated integer between 1 and 100."
+    },
+    {
+        "name": "sender",
+        "type": "VARCHAR(255)",
+        "description": "Name or ID of the sender.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "hub",
+        "type": "VARCHAR(255)",
+        "description": "Identifier for the hub processing the order.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "dispatch_pool",
+        "type": "INT",
+        "description": "Identifier for the dispatch pool handling the order.",
+        "rules": "Randomly generated integer between 1 and 100."
+    },
+    {
+        "name": "vehicle_type",
+        "type": "VARCHAR(50)",
+        "description": "Type of vehicle used for the order (e.g., car, bike, van).",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "start_time",
+        "type": "DATETIME",
+        "description": "Timestamp when the order process starts.",
+        "rules": "Randomly generated datetime between January 1, 2020, and December 31, 2024."
+    },
+    {
+        "name": "end_time",
+        "type": "DATETIME",
+        "description": "Timestamp when the order process ends.",
+        "rules": "Calculated as start_time plus a random duration between 2 minutes and 1 hour."
+    },
+    {
+        "name": "title",
+        "type": "VARCHAR(255)",
+        "description": "Title or description of the order.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "route_description",
+        "type": "TEXT",
+        "description": "Detailed description of the route taken for the order.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "tags",
+        "type": "VARCHAR(255)",
+        "description": "Tags associated with the order for categorization.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "overview",
+        "type": "TEXT",
+        "description": "Overview or summary of the order.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "content",
+        "type": "TEXT",
+        "description": "Detailed content or notes about the order.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "type",
+        "type": "VARCHAR(50)",
+        "description": "Type of the order (e.g., delivery, pickup).",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "start",
+        "type": "VARCHAR(255)",
+        "description": "Start address or location for the order.",
+        "rules": "Randomly selected address from the address_pool."
+    },
+    {
+        "name": "end",
+        "type": "VARCHAR(255)",
+        "description": "End address or location for the order.",
+        "rules": "Randomly selected address from the address_pool (different from start)."
+    },
+    {
+        "name": "service_fee",
+        "type": "DECIMAL(10, 2)",
+        "description": "Fee associated with the order.",
+        "rules": "Randomly generated decimal value between 0.01 and 10,000.00."
+    },
+    {
+        "name": "start_task_validation",
+        "type": "VARCHAR(255)",
+        "description": "Validation information for the start task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "end_task_validation",
+        "type": "VARCHAR(255)",
+        "description": "Validation information for the end task.",
+        "rules": "Random string consisting of alphanumeric characters."
+    },
+    {
+        "name": "status_group",
+        "type": "INT",
+        "description": "Status group identifier for tracking the order's status.",
+        "rules": "Randomly generated integer between 1 and 10."
+    }
+]

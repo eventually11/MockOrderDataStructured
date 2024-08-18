@@ -1,0 +1,2 @@
+[console_scripts]
+run_script = scripts.run_script:main
