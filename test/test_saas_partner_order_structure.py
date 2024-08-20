@@ -11,14 +11,10 @@ files are generated and then cleans up by deleting them after the test.
 """
 import os
 import sys
-current_file_path = os.path.abspath(sys.argv[0])
-parent_directory = os.path.abspath(os.path.join(os.path.dirname(current_file_path), '../../MockOrderDataImporter/main'))
-parent_directory2 = os.path.abspath(os.path.join(os.path.dirname(current_file_path), '../../MockOrderDataGenerator/main'))
-sys.path.insert(0, parent_directory)
-sys.path.insert(0, parent_directory2)
+
 
 import unittest
-from saas_partner_order_structure import SaasPartnerOrderDataStructure  # Adjust the import path as needed
+from MockOrderDataStructured.saas_partner_order_structure import SaasPartnerOrderDataStructure  # Adjust the import path as needed
 
 class TestSaasPartnerOrderDataStructure(unittest.TestCase):
 
