@@ -14,7 +14,7 @@ work order data for SaaS applications.
 import pandas as pd
 from faker import Faker
 import random
-from hypothesis.strategies import integers, text, floats, composite, datetimes, timedeltas
+from hypothesis.strategies import integers, text, floats, datetimes, timedeltas, composite, sampled_from
 from datetime import datetime, timedelta
 import os
 import sys
@@ -47,9 +47,8 @@ class SaasWorkOrderStructure:
             df = pd.read_csv(csv_file_path)
         except :
             print("third try")
-        self.address_distance_map = df.set_index('address')['distance_km'].to_dict()
-        self.address_pool = list(self.address_distance_map.keys())  # List of addresses
-
+            self.address_pool = df['address'].dropna().unique().tolist()
+    
     @composite
     def saas_work_order(draw, self, address_pool):
         service_fee = round(draw(floats(min_value=0.01, max_value=10000.0)), 2)
@@ -62,14 +61,15 @@ class SaasWorkOrderStructure:
         max_duration = timedelta(hours=1)
         end_time = start_time + draw(timedeltas(min_value=min_duration, max_value=max_duration))
 
-        start_address = random.choice(self.address_pool)
-        end_address = random.choice(self.address_pool)
+        start_address = draw(sampled_from(self.address_pool))
+        end_address = draw(sampled_from([address for address in self.address_pool if address != start_address]))
+
         while end_address == start_address:
             end_address = random.choice(self.address_pool)
         
         # Retrieve the distance for the selected addresses
-        start_distance = self.address_distance_map[start_address]
-        end_distance = self.address_distance_map[end_address]
+        # start_distance = self.address_distance_map[start_address]
+        # end_distance = self.address_distance_map[end_address]
 
         return {
             'work_id': self.work_id_list.pop(),
@@ -93,7 +93,7 @@ class SaasWorkOrderStructure:
             'auto_publish_time': start_time,
             'status_code': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
             'estimation': draw(text(min_size=1, alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')),
-            'distance': abs(end_distance - start_distance),  # Calculate distance based on start and end
+            'distance': draw(integers(min_value=1, max_value=1000)),  # Calculate distance based on start and end
             'channel': draw(integers(min_value=1, max_value=10))
         }
     

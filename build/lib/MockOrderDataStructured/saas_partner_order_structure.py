@@ -14,7 +14,7 @@ which generates and documents the data structure for SaaS partner orders.
 import pandas as pd
 from faker import Faker
 import random
-from hypothesis.strategies import integers, text, floats, composite, datetimes, timedeltas
+from hypothesis.strategies import integers, text, floats, datetimes, timedeltas, composite, sampled_from
 from datetime import datetime, timedelta
 import os
 import sys
@@ -75,8 +75,8 @@ class SaasPartnerOrderDataStructure:
         max_duration = timedelta(hours=1)
         end_time = start_time + draw(timedeltas(min_value=min_duration, max_value=max_duration))
 
-        start_address = random.choice(address_pool)
-        end_address = random.choice(address_pool)
+        start_address = draw(sampled_from(self.address_pool))
+        end_address = draw(sampled_from([address for address in self.address_pool if address != start_address]))
         while end_address == start_address:
             end_address = random.choice(address_pool)
 
